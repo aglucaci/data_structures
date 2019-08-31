@@ -1,5 +1,7 @@
 package com.company;
 
+// May need to change the filename to Main.java for it to compile.
+
 public class Main {
 
     public static void main(String[] args) {
