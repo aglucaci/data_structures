@@ -2,13 +2,15 @@ package com.company;
 
 //Assignment 1
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
 
         // Q1 part 1, count number of digits, assume positive integer
-        System.out.println("\nQ1");
+        System.out.println("\nQ1 Part 1");
         System.out.println("Expecting 1, got: " + countDigits(0));
         System.out.println("Expecting 1, got: " + countDigits(9));
         System.out.println("Expecting 2, got: " + countDigits(12));
@@ -20,7 +22,7 @@ public class Main {
         System.out.println("Expecting 6, got: " + countDigits(700640));
 
         //Q1 part 2, returns digit from the right
-        System.out.println("\nQ2");
+        System.out.println("\nQ1 Part 2");
         System.out.println("Expecting 3, got: " + nthDigitBack(0, 123));
         System.out.println("Expecting 2, got: " + nthDigitBack(1, 123));
         System.out.println("Expecting 1, got: " + nthDigitBack(2, 123));
@@ -29,7 +31,7 @@ public class Main {
         System.out.println("Expecting 8, got: " + nthDigitBack(3, 18023));
 
         //Q1 part 3, returns digit from the left
-        System.out.println("\nQ3");
+        System.out.println("\nQ1 Part 3");
         System.out.println("Expecting 1, got: " + nthDigit( 0 , 123));
         System.out.println("Expecting 2, got: " + nthDigit( 1 , 123));
         System.out.println("Expecting 3, got: " + nthDigit( 2 , 123));
@@ -37,6 +39,28 @@ public class Main {
         System.out.println("Expecting 0, got: " + nthDigit( 0 , 0));
         System.out.println("Expecting 2, got: " + nthDigit( 3 , 18023));
 
+        //Q2 part 1
+        //This has a typo in the HW description
+        System.out.println("\nQ2 Part 1");
+        int tally[] = {0, 0, 1, 2, 0, 0, 3, 0 ,9, 0};
+        System.out.println("Initial tally: " + Arrays.toString(tally));
+        updateTally(2, 1072, tally);
+        //n = 2 of 1072 is 7 not 1.
+        System.out.println("Updated! " + Arrays.toString(tally));
+        //this is also wrong, digit is correct (2) but the position in tally is wrong.
+        updateTally(0, 2541, tally);
+        System.out.println("Updated! " + Arrays.toString(tally));
+
+        //Q2 part 2
+        System.out.println("\nQ2 Part 2");
+        int enrollments[] = {12176, 5476, 543, 3490, 24892, 28619, 2595, 603, 2527, 1465, 1858};
+        System.out.println(Arrays.toString(nthDigitTally(0, enrollments)));
+
+        //Q3 part 1
+
+        //Q3 part 2
+
+        //Q4 part 1
     }
 
     public static int countDigits(int num) {
@@ -83,11 +107,9 @@ public class Main {
     }
 
     public static int nthDigit(int n, int num) {
-
         if (n >= countDigits(num)) {
             return 0;
         }
-
         //int x = 0;
         //return x;
         /*
@@ -110,24 +132,47 @@ public class Main {
         // in the case of 123. pos 1 frm the left = pos 3 (count digits) from the right
         // 0 pos left, 2 position right
         //int answer = 0;
-
-
-
         /*
         if (n == 0) {
             //System.out.println("nthDigitBack, count - 1: " + nthDigitBack(countDigits(num) - 1, num));
             return nthDigitBack(countDigits(num) - 1, num);
         }
         */
-
-
-
         return nthDigitBack(countDigits(num) - n - 1, num);
-
-
-
-
-
         //return 0;
+    }
+
+
+    public static void updateTally(int n, int num, int[] tally) {
+        //assumes tally is an int[] of 10 integers
+
+        tally[n] = nthDigit(n, num);
+        //return nthDigit(n, num);
+    }
+
+    public static int[] nthDigitTally (int n, int[] nums) {
+        int[] freqs = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        //int[] digits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        //System.out.println("n: " + n);
+        // in  the nth position, what is the frequnecy of 0-9
+        //loop over nums
+
+        for (int i = 0; i < nums.length; i++) {
+            //get nth position
+            //System.out.println("number: " + nums[i]);
+            //System.out.println("nthDigit: " + nthDigit(n, nums[i]));
+
+            //updateTally(n, nums[i], answer);
+
+            freqs[nthDigit(n, nums[i])] += 1;
+
+            //updateTally(i, nums[i], freqs);
+
+        }
+
+
+        return freqs;
+
     }
 }
