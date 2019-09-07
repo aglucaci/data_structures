@@ -31,7 +31,6 @@ public class Main {
         //Q1 part 3, returns digit from the left
         System.out.println("\nQ3");
         System.out.println("Expecting 1, got: " + nthDigit( 0 , 123));
-
         System.out.println("Expecting 2, got: " + nthDigit( 1 , 123));
         System.out.println("Expecting 3, got: " + nthDigit( 2 , 123));
         System.out.println("Expecting 0, got: " + nthDigit( 3 , 123));
@@ -61,7 +60,7 @@ public class Main {
 
     public static int nthDigitBack(int n, int num) {
         // check if this is a bogus call
-        if (n > countDigits(num)) {
+        if (n >= countDigits(num)) {
             return 0;
         }
         int x;
@@ -73,8 +72,9 @@ public class Main {
         }
         */
         // return (x % 10) / n;
-        for (int i = 0; i <= n - 1; i++){
-            x = x / 10;
+        for (int i = 0; i <= n - 1; i++) {
+            x /= 10;
+            //x = x / 10;
             //System.out.println(x);
         }
         x = x % 10;
@@ -83,24 +83,50 @@ public class Main {
     }
 
     public static int nthDigit(int n, int num) {
-        if (n > countDigits(num)) {
+
+        if (n >= countDigits(num)) {
             return 0;
         }
 
         //int x = 0;
-
         //return x;
         /*
         System.out.println("\n");
         System.out.println("n: " + n);
         System.out.println("num: " + num);
         System.out.println("Count digits: " + countDigits(num));
-        //System.out.println(nthDigitBack(n - 1, num));
-        System.out.println("here: " + nthDigitBack(n + 2, num));
-        */
-        // in the case of 123. pos 1 frm the left = pos 3 (countdigits) from the right
 
-        return nthDigitBack(countDigits(num) - 1 , num);
+        System.out.println("nthDigitBack: " + nthDigitBack(n, num));
+        System.out.println("nthDigitBack - 1: " + nthDigitBack(n - 1, num));
+        System.out.println("nthDigitBack, n: " + nthDigitBack(n, num));
+        System.out.println("nthDigitBack, count: " + nthDigitBack(countDigits(num), num));
+        System.out.println("nthDigitBack, count - 1: " + nthDigitBack(countDigits(num) - 1, num));
+        System.out.println("nthDigitBack, count - n: " + nthDigitBack(countDigits(num) - n, num));
+        System.out.println("nthDigitBack, n - count: " + nthDigitBack(n - countDigits(num), num));
+        System.out.println("nthDigitBack, n - count + 1: " + nthDigitBack(n - countDigits(num) + 1, num));
+        System.out.println("nthDigitBack, count - n - 1: " + nthDigitBack(countDigits(num) - n - 1, num));
+        //System.out.println("here: " + nthDigitBack(n + 2, num));
+        */
+        // in the case of 123. pos 1 frm the left = pos 3 (count digits) from the right
+        // 0 pos left, 2 position right
+        //int answer = 0;
+
+
+
+        /*
+        if (n == 0) {
+            //System.out.println("nthDigitBack, count - 1: " + nthDigitBack(countDigits(num) - 1, num));
+            return nthDigitBack(countDigits(num) - 1, num);
+        }
+        */
+
+
+
+        return nthDigitBack(countDigits(num) - n - 1, num);
+
+
+
+
 
         //return 0;
     }
