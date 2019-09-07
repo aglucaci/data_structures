@@ -168,7 +168,8 @@ public class Main {
             freqs[nthDigit(n, nums[i])] += 1;
 
             //updateTally(i, nums[i], freqs);
-
+            
+            //Can't seem to get this to work with updateTally.
         }
 
 
