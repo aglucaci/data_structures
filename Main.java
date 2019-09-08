@@ -19,9 +19,17 @@ public class Main {
         // had to modify this to remove intro text
         //String filename = "/Users/user/Documents/librarybooks.txt";
 
-        String filename = "/Users/user/Documents/fantasypoints.txt";
+        /*
+        Data from: https://www.reddit.com/r/fantasyfootball/comments/8y0298/heres_a_spreadsheet_with_10_years_of_fantasy_data/
+        Download: https://www.dropbox.com/s/7q0679tjqacs4xv/Raw%20Data%2010yrs.xlsx?dl=1
 
+        Grabbed Fantasy Points column. Removed any text. Left the negative values, they turn into positive integers (absolute value).
 
+         */
+
+        //String filename = "/Users/user/Documents/fantasypoints.txt";
+
+        String filename = "/Users/user/Documents/fantasypoints_cp.txt";
 
         System.out.println("Reading: " + filename);
 
@@ -55,8 +63,8 @@ public class Main {
     }
 
 
-    public static void main_OLD(String[] args) throws IOException {
-        // write your code here
+    public static void main_OLD_Testing_out_script(String[] args) throws IOException {
+        // This was used to debug, setup the program.
 
         // Q1 part 1, count number of digits, assume positive integer
         System.out.println("\nQ1 Part 1");
@@ -116,11 +124,14 @@ public class Main {
         //Q3 part 2
         //Formatting main
         //Would be easier to do with ArrayList
+
         //Q4 part 1
     }
 
     public static int countDigits(int num) {
         /* May need to use absolute value of num */
+        num = Math.abs(num);
+
         int x;
         int divider = 10;
         int count = 1;
@@ -304,6 +315,7 @@ public class Main {
         int nextInt;
         int i = 0;
 
+        //setup a large array.
         int[] elements = new int[10000];
         //int[] elements;
 
@@ -323,7 +335,16 @@ public class Main {
 
 
            //elements[i] = Integer.parseInt(nextInt);
-            elements[i] = nextInt;
+
+            /*
+            if (nextInt >= 0) {
+                elements[i] = nextInt;
+            }
+            */
+
+            elements[i] = Math.abs(nextInt); // Use only positive integers
+
+
             //System.out.println(Arrays.toString(elements));
             i += 1;
 
@@ -341,6 +362,7 @@ public class Main {
         }
 
         //remove 0s
+
         //shamefully stolen from: https://stackoverflow.com/questions/8777217/remove-all-zeros-from-array
         int targetIndex = 0;
 
@@ -355,7 +377,6 @@ public class Main {
 
 
         return newArray;
-
 
         //return elements;
     }
