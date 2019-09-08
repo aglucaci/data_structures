@@ -10,17 +10,31 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String filename = "/Users/user/Documents/ENROLLMENT.data";
+        //test data
+        //String filename = "/Users/user/Documents/ENROLLMENT_cp.data";
+
+        // had to modify this to remove intro text
+        //String filename = "/Users/user/Documents/livejournal.txt";
+
+        // had to modify this to remove intro text
+        //String filename = "/Users/user/Documents/librarybooks.txt";
+
+        String filename = "/Users/user/Documents/fantasypoints.txt";
+
+
 
         System.out.println("Reading: " + filename);
 
         //ArrayList<Integer> elements = new ArrayList<Integer>();
+
+
 
         int[] elements = {};
 
         elements = readMysteriousNumbers(filename);
 
         System.out.println("Returned: " + Arrays.toString(elements));
+        System.out.println("Elements: " + elements.length);
 
         int n = 0;
 
@@ -286,10 +300,11 @@ public class Main {
         //ArrayList<Integer> elements = new ArrayList<Integer>();
 
         Scanner sc = new Scanner(file);
+
         int nextInt;
         int i = 0;
 
-        int[] elements = new int[25];
+        int[] elements = new int[10000];
         //int[] elements;
 
         while (sc.hasNextInt()) {
@@ -326,6 +341,7 @@ public class Main {
         }
 
         //remove 0s
+        //shamefully stolen from: https://stackoverflow.com/questions/8777217/remove-all-zeros-from-array
         int targetIndex = 0;
 
         for( int sourceIndex = 0;  sourceIndex < elements.length;  sourceIndex++ ) {
@@ -333,8 +349,11 @@ public class Main {
                 elements[targetIndex++] = elements[sourceIndex];
             }
         }
+
         int[] newArray = new int[targetIndex];
         System.arraycopy( elements, 0, newArray, 0, targetIndex );
+
+
         return newArray;
 
 
