@@ -2,11 +2,14 @@ package com.company;
 
 //Assignment 1
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // write your code here
 
         // Q1 part 1, count number of digits, assume positive integer
@@ -57,6 +60,12 @@ public class Main {
         System.out.println(Arrays.toString(nthDigitTally(0, enrollments)));
 
         //Q3 part 1
+        System.out.println("\nQ3 Part 1");
+        System.out.println("Doing some file reading");
+        String filename = "/Users/user/Documents/ENROLLMENT.data";
+        System.out.println("Reading: " + filename);
+        //System.out.println("Returned: " + Arrays.toString(readMysteriousNumbers(filename)));
+        System.out.println("Returned: " + readMysteriousNumbers(filename));
 
         //Q3 part 2
 
@@ -153,11 +162,9 @@ public class Main {
     public static int[] nthDigitTally (int n, int[] nums) {
         int[] freqs = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         //int[] digits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-
         //System.out.println("n: " + n);
         // in  the nth position, what is the frequnecy of 0-9
         //loop over nums
-
         for (int i = 0; i < nums.length; i++) {
             //get nth position
             //System.out.println("number: " + nums[i]);
@@ -168,12 +175,89 @@ public class Main {
             freqs[nthDigit(n, nums[i])] += 1;
 
             //updateTally(i, nums[i], freqs);
-            
+
             //Can't seem to get this to work with updateTally.
         }
-
-
         return freqs;
 
     }
+
+
+    public static ArrayList readMysteriousNumbers(String filename) throws IOException {
+        //Review the file reading video from module 2
+        /*
+        File file = new File(filename);
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        */
+        //FileReader fr = new FileReader(filename);
+
+        /*
+        try {
+            //  Block of code to try
+            while ((st = br.readLine()) != null) {
+                System.out.println("Adding: " + st);
+                elements[elements.length + 1] = Integer.parseInt(st);
+            }
+        }
+        catch(Exception e) {
+        //  Block of code to handle errors
+            System.out.println("im guessing the file ended");
+            return elements;
+        }
+        */
+        /*
+        while ((st = br.readLine()) != null) {
+            System.out.println("Adding: " + st);
+            elements[elements.length + 1] = Integer.parseInt(st);
+        }
+        */
+        /*
+        int i;
+
+        while ((i=fr.read()) != -1) {
+            //System.out.print((char) i);
+
+            elements[elements.length + 1] = (int) i;
+        }
+        */
+
+        File file = new File(filename);
+
+        //int[] elements = {};
+
+        ArrayList<Integer> elements = new ArrayList<Integer>();
+
+        Scanner sc = new Scanner(file);
+        int nextInt;
+        int i = 0;
+
+        while (sc.hasNextInt()) {
+            //System.out.println(sc.nextLine());
+            //elements[elements.length + 1] = Integer.parseInt(sc.nextLine());
+            nextInt = sc.nextInt();
+
+            System.out.println("Read: " + nextInt);
+            //System.out.println(nextI);
+            //elements[elements.length + 1] = nextI;
+
+            //how do I add this to an array?
+
+            //System.out.println(Arrays.toString(elements));
+
+
+            //elements[0] = nextInt;
+            elements.add(nextInt);
+
+            //elements = new int[i++];
+            //elements[i] = nextI;
+
+            //elements[i++] = (int) nextI;
+            //elements[elements.length + 1] = Integer.parseInt(sc.nextLine());
+
+        }
+        return elements;
+    }
+
+
 }
