@@ -263,7 +263,7 @@ public class Main {
 
     }
 
-
+    /*
     public static int[] readMysteriousNumbers(String filename) throws IOException {
         //Review the file reading video from module 2
         /*
@@ -380,6 +380,24 @@ public class Main {
 
         //return elements;
     }
+    */
 
 
+    
+    public static int[] readMysteriousNumbers(String filename) throws FileNotFoundException {
+       File file = new File(filename);
+       Scanner scan = new Scanner(file);
+       int counter = 1;
+       int[] fin = new int[counter];
+       while(scan.hasNextInt()){
+           int[] temp = new int[counter];
+           for (int i = 0; i < temp.length-1; i++) {
+               temp[i] = fin[i];
+           }
+           temp[counter-1] = scan.nextInt();
+           fin = temp;
+           counter +=1;
+       }
+       return fin;
+   }
 }
