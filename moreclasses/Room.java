@@ -6,13 +6,14 @@ public class Room {
 
     //private int totalNumber;
 
-    public void Room (int numPeople) {
+    public void Room(int numPeople) {
         this.numberInRoom = numPeople;
+        this.totalNumber += numPeople;
 
     }
 
-
     public void addOneToRoom () {
+        this.numberInRoom += 1;
         this.totalNumber += 1;
 
     }
