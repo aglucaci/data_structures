@@ -1,9 +1,10 @@
 public class Main {
 
-    /* https://www.tutorialspoint.com/java/java_object_classes.htm
+    /* Alexander G. Lucaci
+    * Module 3 - More classes
+    * https://www.tutorialspoint.com/java/java_object_classes.htm
     *
     * */
-
 
     public static void main(String[] args) {
 	// write your code here
@@ -29,22 +30,13 @@ public class Main {
         complexnumber.multiply(complexnumber);
         complexnumber.divide(complexnumber);
 
-
-
         //Tic Tac Toe
-
-
-
-
         System.out.print("\nStarting Tic Tac Toe");
 
-        TicTacToe game_tictactoe = new TicTacToe();
+        TicTacToe game = new TicTacToe();
 
         //game_tictactoe.TicTacToe(2);
         //game_tictactoe.DisplayTheBoard();
-
-
-
 
 
     }
