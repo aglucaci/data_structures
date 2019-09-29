@@ -41,6 +41,33 @@ public class Main {
         System.out.print("\n");
         System.out.print("\t Output: " + allMultiples(A, 5));
 
+        System.out.print("\n2.3\n");
+        List<String> B = new ArrayList<String>() {{
+            add("hotdog");
+            add("pie");
+            add("cake");
+            add("pizza");
+            add("soup");
+        } };
+
+        System.out.print("\t" + allStringsOfSize(B, 4));
+
+        System.out.print("\n2.4\n");
+        System.out.print("\t" + stringToListOfWords("Hello, World!"));
+
+        System.out.print("\n2.5\n");
+        List<Integer> D = new ArrayList<Integer>() {{
+            add(7);
+            add(2);
+            add(2);
+            add(1);
+            add(8);
+        } };
+
+        System.out.print("\t Input: " + D + "\n");
+        removeAllInstances(D, 2);
+        System.out.print("\t Output: " + D);
+
     }
 
     //Generic method
@@ -75,27 +102,63 @@ public class Main {
                 OUTPUT.add(item);
             }
         }
-
         return OUTPUT;
     }
 
     //2.3
-    public static void allStringsOfSize() {
+    public static List<String> allStringsOfSize(List<String> list, int length) {
+        //inputs are ["I", "like", "to", "eat", "eat", "eat", "apples", "and", "bananas"] and 3,
+        // the new list is ["eat", "eat", "eat", "and"].
 
+        //Similar in style to above but for Strings
+        List<String> OUTPUT = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+
+            if(list.get(i).length() == length) { //Does this words length match our input length?
+                OUTPUT.add(list.get(i));
+            }
+        }
+        return OUTPUT;
     }
 
     //2.4
-    public static void stringToListOfWords () {
+    public static List<String> stringToListOfWords (String word) {
+        List<String> OUTPUT = new ArrayList<>();
 
+        String[] newList = word.split(" ", 0 );  //split via space character
+
+        for (int i = 0; i < newList.length; i++) {
+            String holder = newList[i].replaceAll("[^a-zA-Z]",""); //take all the extra stuff out.
+            //System.out.print(holder);
+            OUTPUT.add(holder);
+        }
+
+        return OUTPUT;
     }
 
     //2.5
-    public static void removeAllInstances() {
+    public static <E> void removeAllInstances(List<E> list, E item) {
+        //For example, if the method is passed the List<Integer> [1, 4, 5, 6, 5, 5, 2] and the Integer 5
+        //the method removes all 5’s from the List
+        //The List then becomes [1, 4, 6, 2]
 
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(item)) {
+                list.remove(i); //This will change the list size.
+                removeAllInstances(list, item); //Loop until we have no more items that match.
+            }
+        }
     }
 
     //Extra credit
     //Described in the stringToListOfWords() section
+    /*
+    For extra credit, sanitize the String, cleaning it up so that we remove the punctuation and other extraneous characters such that the output in
+    the above example would become ["Hello", "world"]
+     */
+
+    // SEE 2.4 for Extra credit work.
 
 
 }
