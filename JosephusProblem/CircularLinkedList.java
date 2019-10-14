@@ -60,10 +60,38 @@ public class CircularLinkedList<E> implements Iterable<E> {
             before.next = adding;
         }
         size += 1;
+
+        /*
+
+        if(size == 0){ //since the list is empty, we will be adding to empty list
+            this.head = adding;
+            this.tail = adding;
+        }
+
+        //boolean testBool = index == size;
+        //int caseSize = testBool ? true;
+
+        switch(index) {
+            case 0:
+                adding.next = head;
+                head = adding;
+                tail.next = head;
+            case size: //needs to be constant
+                tail.next = adding;
+                tail = adding;
+                tail.next = head;
+            default:
+                Node<E> before = getNode(index-1);
+                adding.next = before.next;
+                before.next = adding;
+
+        }
+
+
+        size += 1;
+        */
+
     }
-
-
-
     // remove must handle the following cases
     // out of bounds
     // removing the only thing in the list
@@ -72,32 +100,33 @@ public class CircularLinkedList<E> implements Iterable<E> {
     // removing any other node
     // REMEMBER TO DECREMENT THE SIZE
     public E remove(int index) {
-        if (index < 0 || index >= size) { // if out of bounds
+        if (index < 0 || index >= size) { // check to make sure index is within our size.
             throw new IndexOutOfBoundsException("Error: Index out of bounds (E remove)");
         }
 
         E toReturn = null;
 
-        if(size == 1){ // if its the only thing in the list
+        if (size == 1){ // this is the end of the line.  Last person alive.
             toReturn = head.item;
             this.head = null;
             this.tail = null;
-        }else if(index == 0){ //remove the first thing in list
+        } else if(index == 0){ // remove person at the beginning of the list.
             toReturn = head.item;
             head = head.next;
             tail.next = head;
             //System.out.println(tail);
-        }else if(index == size-1){ // removes last thing
+        } else if(index == size - 1) { //removes the person at the end.
             Node<E> before = getNode(index -1);
             toReturn = tail.item;
             before.next = head;
             tail = before;
-        }else{ //if its anywhere else
+        } else{ // removes persons located internally on our ring.
             Node<E> before = getNode(index -1);
             toReturn = before.next.item;
             before.next = before.next.next;
         }
-        size -= 1;
+        size -= 1; //decrements the size of the ring.
+
         return toReturn;
     }
 
