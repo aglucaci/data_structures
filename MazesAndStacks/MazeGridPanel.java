@@ -1,15 +1,20 @@
+package com.company;
 
-
+import com.company.Cell;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
-public class MazeGridPanel extends JPanel{
+//Alexander G. Lucaci
+
+public class MazeGridPanel extends JPanel {
 	private int rows;
 	private int cols;
 	private Cell[][] maze;
-
-
 
 	// extra credit
 	public void genDFSMaze() {
@@ -18,10 +23,6 @@ public class MazeGridPanel extends JPanel{
 		Cell start = maze[0][0];
 		stack.push(start);
 	}
-
-
-	// add function to check direction
-
 
 	//homework
 	public void solveMaze() {
@@ -32,42 +33,30 @@ public class MazeGridPanel extends JPanel{
 		finish.setBackground(Color.RED);
 		stack.push(start);
 
-		Cell current = stack.peek();
-		while(!(current.getBackground() == Color.RED) && !stack.isEmpty()) {
-			current = stack.peek();
-			if(current.getBackground() == Color.RED) {
-				System.out.println("BINGO, we found it");
+		System.out.println("In the maze. Lets get out of here!");
+		while(!stack.isEmpty()) {
+			Cell current = stack.peek(); //get the stacks first element
+
+			if (current.getBackground() == Color.RED) { // We got out.
+				System.out.println("We have left the maze.");
 				break;
-			}else{
-				System.out.println("still searching");
-				current.setBackground(Color.GREEN);
+			} else{
+				current.setBackground(Color.GREEN); // this is to note that we have visited this cell
 			}
 
-			/*
-			want to add a switch statement but not sure how to
-			with the type that we have
-			*/
-
-
-			if(!current.northWall && !visited(current.row-1, current.col)){
+			if(!current.northWall && !visited(current.row-1, current.col)){ //Look in that direction, and answer "have we visted it?"
 				Cell move = maze[current.row-1][current.col];
 				stack.push(move);
-				continue;
-			}
-
-			if(!current.eastWall && !visited(current.row, current.col+1)){
+				continue; //loop
+			} else if(!current.eastWall && !visited(current.row, current.col+1)){
 				Cell move = maze[current.row][current.col + 1];
 				stack.push(move);
 				continue;
-			}
-
-			if(!current.southWall && !visited(current.row+1, current.col)){
+			} else if(!current.southWall && !visited(current.row+1, current.col)){
 				Cell move = maze[current.row + 1][current.col];
 				stack.push(move);
 				continue;
-			}
-
-			if(!current.westWall && !visited(current.row, current.col-1)){
+			} else if(!current.westWall && !visited(current.row, current.col-1)){
 				Cell move = maze[current.row][current.col - 1];
 				stack.push(move);
 				continue;
@@ -78,37 +67,28 @@ public class MazeGridPanel extends JPanel{
 		}
 	}
 
-
 	public boolean visited(int row, int col) {
 		Cell c = maze[row][col];
 		Color status = c.getBackground();
 		if(status.equals(Color.WHITE)  || status.equals(Color.RED)  ) {
 			return false;
 		}
-
-
 		return true;
-
-
 	}
 
 
 	public void genNWMaze() {
-
 		for(int row = 0; row  < rows; row++) {
 			for(int col = 0; col < cols; col++) {
-
 				if(row == 0 && col ==0) {
 					continue;
-				}
-
-				else if(row ==0) {
+				} else if(row ==0) {
 					maze[row][col].westWall = false;
 					maze[row][col-1].eastWall = false;
 				} else if(col == 0) {
 					maze[row][col].northWall = false;
 					maze[row-1][col].southWall = false;
-				}else {
+				} else {
 					boolean north = Math.random()  < 0.5;
 					if(north ) {
 						maze[row][col].northWall = false;
@@ -122,7 +102,6 @@ public class MazeGridPanel extends JPanel{
 			}
 		}
 		this.repaint();
-
 	}
 
 	public MazeGridPanel(int rows, int cols) {
@@ -132,22 +111,12 @@ public class MazeGridPanel extends JPanel{
 		this.setLayout(new GridLayout(rows,cols));
 		this.maze =  new Cell[rows][cols];
 		for(int row = 0 ; row  < rows ; row++) {
-			for(int col = 0; col < cols; col++) {
-
-				maze[row][col] = new Cell(row,col);
-
+			for (int col = 0; col < cols; col++) {
+				maze[row][col] = new Cell(row, col);
 				this.add(maze[row][col]);
 			}
-
 		}
-
-
 		this.genNWMaze();
 		this.solveMaze();
-
 	}
-
-
-
-
 }
