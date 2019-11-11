@@ -41,11 +41,13 @@ public class Queens {
         return true;
     }
 
-    public static void printQueens(int[] q) {
-        int n = q.length;
+    public static void printQueens(int[] board) {
+
+        int n = board.length;
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (q[i] == j) {
+                if (board[i] == j) {
                     System.out.print("Q ");
                 } else {
                     System.out.print("* ");
