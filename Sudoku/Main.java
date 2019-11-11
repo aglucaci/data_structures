@@ -14,41 +14,25 @@ public class Main {
             {0, 2, 0, 0, 3, 0, 6, 0, 8}
     };
 
-    public static boolean isSafe(int[][] board, int row, int col, int num) {
-        // row has the unique (row-clash)
-        for (int d = 0; d < board.length; d++) {
-            // if the number we are trying to
-            // place is already present in
-            // that row, return false;
-            if (board[row][d] == num) {
-                return false;
-            }
-        }
+    public static int numAttempts = 0;
 
-        // column has the unique numbers (column-clash)
-        for (int r = 0; r < board.length; r++) {
-            // if the number we are trying to
-            // place is already present in
-            // that column, return false;
+    public static boolean isValid(int row, int col, int num) {
+        // Check row for clash.
+        for (int d = 0; d < board.length; d++) { if (board[row][d] == num) { return false; } }
 
-            if (board[r][col] == num) {
-                return false;
-            }
-        }
+        //Check columns for clash
+        for (int r = 0; r < board.length; r++) { if (board[r][col] == num) { return false; } }
 
         // corresponding square has
         // unique number (box-clash)
-        int sqrt = (int) Math.sqrt(board.length);
+        //int sqrt = (int) Math.sqrt(board.length);
+        int sqrt = 3;
         int boxRowStart = row - row % sqrt;
         int boxColStart = col - col % sqrt;
 
-        for (int r = boxRowStart;
-             r < boxRowStart + sqrt; r++) {
-            for (int d = boxColStart;
-                 d < boxColStart + sqrt; d++) {
-                if (board[r][d] == num) {
-                    return false;
-                }
+        for (int r = boxRowStart; r < boxRowStart + sqrt; r++) {
+            for (int d = boxColStart; d < boxColStart + sqrt; d++) {
+                if (board[r][d] == num) { return false; }
             }
         }
 
@@ -57,7 +41,11 @@ public class Main {
     }
 
     public static boolean solveSudoku() {
+        //System.out.println("Working.");
         // Initialize.
+        numAttempts += 1;
+        //System.out.println(numAttempts + " Solution not found yet.");
+        //PrintBoard();
         int row = -1;
         int col = -1;
         boolean isEmpty = true;
@@ -68,9 +56,6 @@ public class Main {
                 if (board[i][j] == 0) {
                     row = i;
                     col = j;
-
-                    // we still have some remaining
-                    // missing values in Sudoku
                     isEmpty = false;
                     break;
                 }
@@ -78,22 +63,24 @@ public class Main {
         }
 
         // no empty space left
-        if (isEmpty) {
-            return true;
-        }
+        if (isEmpty) { return true; }
 
         // Backtracking
         for (int num = 1; num <= n; num++) {
-            if (isSafe(board, row, col, num)) {
+            if (isValid(row, col, num)) {
                 board[row][col] = num;
-                if (solveSudoku()) {
+
+                if (solveSudoku()) { //Recursive
                     //PrintBoard(board);
                     return true;
+
                 } else {
                     board[row][col] = 0;
                 }
             }
         }
+
+        //System.out.println(numAttempts + " Solution not found yet.");
         return false;
     }
 
@@ -134,8 +121,21 @@ public class Main {
 
     public static void main(String args[]) {
         System.out.println("Solving Sudoku!");
+
+        System.out.println("\n# --- Initial Board");
+        PrintBoard();
+
+
+        //while (solveSudoku() == true) {
+        //    System.out.println("Working..");
+        //}
+        //solveSudoku();
+        //PrintBoard();
+
+
         if (solveSudoku()) {
-            PrintBoard(); // print solution }
+            System.out.println("\n# --- Solved Board");
+            PrintBoard(); // display the final board
         }
 
     }
