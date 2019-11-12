@@ -2,6 +2,8 @@ package com.company;
 
 public class Queens {
 
+    public static boolean isSolved = false;
+
     public static void main(String[] args) {
         int[] boardSize = new int[8];
         System.out.println("#8 Queens Solver\n");
@@ -42,7 +44,6 @@ public class Queens {
     }
 
     public static void printQueens(int[] board) {
-
         int n = board.length;
 
         for (int i = 0; i < n; i++) {
