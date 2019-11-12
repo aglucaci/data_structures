@@ -1,6 +1,13 @@
 package com.company;
 
+import java.net.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
+
+    //public static int[][] LoadedBoard = new int[][];
 
     public static int[][] board = new int[][]{
             {0, 0, 2, 9, 8, 0, 5, 0, 0},
@@ -15,6 +22,10 @@ public class Main {
     };
 
     public static int numAttempts = 0;
+
+    public static int runningSum = 0;
+
+    public static boolean isSolved = false;
 
     public static boolean isValid(int row, int col, int num) {
         // Check row for clash.
@@ -52,7 +63,11 @@ public class Main {
         int n = 9;
 
         for (int i = 0; i < n; i++) {
+
+
             for (int j = 0; j < n; j++) {
+
+
                 if (board[i][j] == 0) {
                     row = i;
                     col = j;
@@ -94,8 +109,15 @@ public class Main {
         for (int i = 0; i < 9; i++) {
             System.out.print("| ");
             for (int j = 0; j < 9; j++) {
+
                 System.out.print(board[i][j]);
                 count += 1;
+
+                if (isSolved == true && j < 3 && i < 1) {
+                    runningSum += board[i][j];
+                    //System.out.println("Adding: " + board[i][j]);
+                }
+
                 if (count == 3) {
                     System.out.print(" | ");
                     count = 0;
@@ -119,24 +141,102 @@ public class Main {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
+        System.out.println("Loading Data for Sudoku!");
+        String input;
+        URL url = new URL("https://projecteuler.net/project/resources/p096_sudoku.txt");
+
+        BufferedReader read = new BufferedReader(new InputStreamReader(url.openStream()));
+
+        List<String> sudoku = new ArrayList<>();
+
+        while ((input = read.readLine()) != null)
+            //System.out.println(input +  " line");
+            //System.out.println(input);
+            if (input.charAt(0) != 'G') {
+                //System.out.println(input);
+                sudoku.add(input);
+            }
+        read.close();
+
+        //Data has been read.
+        //System.out.println(sudoku);
+        int n = sudoku.size() / 9; // 50
+        System.out.println("Number of Sudoku Boards: " + n);
+        int count = 9;
+        int i = 0;
+
+        int numRuns = 1;
+
+        //Debugging
+        /*
+        for (int z = 9; z < 18; z++) {
+
+            System.out.println(sudoku.get(z));
+        }
+        */
+
+
+        for (int m = 0; m < n; m++) {
+            System.out.println("Processing board: " + numRuns);
+            i = 9 * m;
+            count = numRuns * 9;
+
+            //Loop n times
+            String line;
+            int data;
+            char ch = '*';
+
+            //0-9,, .. etc
+
+            //if (numRuns > 1) { count -= 1;}
+            //System.out.println(i + " " + count);
+
+            while (i < count) { // Scans over the Arraylist.
+                line = sudoku.get(i);
+                //System.out.println(sudoku.get(i));
+                //System.out.println(line);
+                //System.out.println(line);
+
+                for (int j = i; j < line.length(); j++) {
+                    //System.out.println(≈);
+                    //data = Integer.parseInt(line.valueOf(j));
+                    //data = Integer.parseInt(line.charAt(j));
+                    ch = line.charAt(j);
+                    data = Character.getNumericValue(ch);
+
+                    //System.out.println(Integer.parseInt(line.valueOf(j)));
+                    //System.out.println("Digit: " + data + " At Position: " + i + " | " + j);
+                    //System.out.println("Current value: " + board[j][i] + "\n");
+                    board[i][j] = data;
+
+                }
+                i++;
+            }
+
+            //System.out.println("Solving Board");
+            runSudoku();
+            numRuns += 1;
+        }
+    }
+
+    public static void runSudoku() {
         System.out.println("Solving Sudoku!");
 
         System.out.println("\n# --- Initial Board");
+        isSolved = false;
         PrintBoard();
-
-
-        //while (solveSudoku() == true) {
-        //    System.out.println("Working..");
-        //}
-        //solveSudoku();
-        //PrintBoard();
-
 
         if (solveSudoku()) {
             System.out.println("\n# --- Solved Board");
+            isSolved = true;
             PrintBoard(); // display the final board
+            System.out.println("Running sum: " + runningSum);
+
+
         }
 
     }
+
+
 }
