@@ -3,7 +3,9 @@ package com.company;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main {
 
@@ -104,7 +106,10 @@ public class Main {
         int count = 0;
         int countRows = 0;
         int numHorizontalLines = 0;
-
+        //Set<String> holder = new HashSet<String>();
+        String str1 = "";
+        String str2 = "";
+        String str3 = "";
         System.out.print("\n  ----------------------------------\n");
         for (int i = 0; i < 9; i++) {
             System.out.print("| ");
@@ -114,7 +119,16 @@ public class Main {
                 count += 1;
 
                 if (isSolved == true && j < 3 && i < 1) {
-                    runningSum += board[i][j];
+                    //runningSum += board[i][j];
+                    if (j == 0) {
+                        str1 = Integer.toString(board[i][j]);
+                    }
+                    if (j == 1) {
+                        str2 = Integer.toString(board[i][j]);
+                    }
+                    if (j == 2) {
+                        str3 = Integer.toString(board[i][j]);
+                    }
                     //System.out.println("Adding: " + board[i][j]);
                 }
 
@@ -139,6 +153,16 @@ public class Main {
                 System.out.print("\n");
             }
         }
+
+        //System.out.println("STRING1: " + str1 + str2 + str3);
+        if (str1 != "" && str2 != "" && str3 != ""){
+            System.out.println("STRING: " + str1 + str2 + str3);
+            String result = str1 + str2 + str3;
+            runningSum += Integer.parseInt(result);
+        }
+        //runningSum += Integer.parseInt(result);
+
+        //System.out.println(Integer.parseInt(result));
     }
 
     public static void main(String args[]) throws Exception {
@@ -178,7 +202,7 @@ public class Main {
 
 
         for (int m = 0; m < n; m++) {
-            System.out.println("Processing board: " + numRuns);
+            System.out.println("\nProcessing board: " + numRuns);
             i = 9 * m;
             count = numRuns * 9;
 
@@ -191,30 +215,35 @@ public class Main {
 
             //if (numRuns > 1) { count -= 1;}
             //System.out.println(i + " " + count);
-
+            int e = 0;
             while (i < count) { // Scans over the Arraylist.
                 line = sudoku.get(i);
                 //System.out.println(sudoku.get(i));
                 //System.out.println(line);
                 //System.out.println(line);
 
-                for (int j = i; j < line.length(); j++) {
+
+
+                for (int j = 0; j < line.length(); j++) { // loops 0 to 9
+                    //System.out.println(j);
                     //System.out.println(≈);
                     //data = Integer.parseInt(line.valueOf(j));
                     //data = Integer.parseInt(line.charAt(j));
                     ch = line.charAt(j);
                     data = Character.getNumericValue(ch);
-
+                    //System.out.println(ch);
                     //System.out.println(Integer.parseInt(line.valueOf(j)));
-                    //System.out.println("Digit: " + data + " At Position: " + i + " | " + j);
-                    //System.out.println("Current value: " + board[j][i] + "\n");
-                    board[i][j] = data;
+                    //System.out.println("Digit: " + data + " At Position: " + e + " | " + j);
 
+                    //System.out.println("Current value: " + board[j][i] + "\n");
+                    board[e][j] = data;
                 }
                 i++;
+                e++;
             }
 
             //System.out.println("Solving Board");
+
             runSudoku();
             numRuns += 1;
         }
@@ -227,6 +256,7 @@ public class Main {
         isSolved = false;
         PrintBoard();
 
+        solveSudoku();
         if (solveSudoku()) {
             System.out.println("\n# --- Solved Board");
             isSolved = true;
