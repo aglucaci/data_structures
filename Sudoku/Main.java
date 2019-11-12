@@ -166,6 +166,10 @@ public class Main {
     }
 
     public static void main(String args[]) throws Exception {
+        //runSudoku(); // This solves the Original board which is hard coded.
+        //System.exit(0); // End the program
+        
+        
         System.out.println("Loading Data for Sudoku!");
         String input;
         URL url = new URL("https://projecteuler.net/project/resources/p096_sudoku.txt");
