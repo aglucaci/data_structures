@@ -45,7 +45,7 @@ public class IndexNode  {
 	
 	public String toString(){
 		String listWord = this.word;
-		listWord += "  " + occurences + "  " + list.toString();
+		listWord += "  " + this.occurences + "  " + list.toString();
 		return listWord;
 		//return "";
 	}

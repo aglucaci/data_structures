@@ -20,6 +20,10 @@ public class IndexTree {
 	public IndexTree() {
 		this.root = null;
 	}
+
+	public IndexNode node() {
+		return this.root;
+	}
 	// ### ----- complete the methods below ### -----
 
 	// this is your wrapper method
@@ -43,7 +47,7 @@ public class IndexTree {
 
 		if (compare == 0){ //found our word.
 			root.list.add(lineNumber);
-			root.occurences =+ 1;
+			root.occurences += 1;
 			return root;
 
 		} else if (compare < 0) { //less than, so go left.
@@ -105,34 +109,22 @@ public class IndexTree {
 			} else {
 				// We will need to keep some order to our subtree prior to deleting
 				IndexNode rootOfLeftSubtree = root.left;
-				IndexNode parentOfPredecessor = null;
-				IndexNode predecessor = null;
 
 				if (rootOfLeftSubtree.right == null) { // nothing there.
 					root.word = rootOfLeftSubtree.word;
-					root.left = rootOfLeftSubtree.left;
+					root.left = rootOfLeftSubtree.left; //go left
 					return root;
 				} else { //something is there.
-					parentOfPredecessor = rootOfLeftSubtree;
-					IndexNode current = rootOfLeftSubtree.right;
-					while (current.right != null) {
-						parentOfPredecessor = current;
-						current = current.right;
-					}
-					predecessor = current;
-					root.word = predecessor.word;
-					parentOfPredecessor.right = predecessor.left;
 					return root;
 				}
 			}
-		} else if (compare < 0) { // its left
+		} else if (compare < 0) { // smaller so go to its left
 			root.left = delete(root.left, word);
 			return root;
-		} else {
+		} else { //bigger
 			root.right = delete(root.right, word);
 			return root;
 		}
-
 	}
 
 	// prints all the words in the index in inorder order
@@ -145,25 +137,23 @@ public class IndexTree {
 		//InOrderTraverse(this.root, root.toString());
 	}
 
-	private void InOrderTraverse(IndexNode root, StringBuilder sb) {
+	private void InOrderTraversal(IndexNode root, StringBuilder sb) {
 		//System.out.println("In INORDER");
 		if (root == null) {
 			sb.append("\n");
 		} else {
-			InOrderTraverse(root.left,  sb);
+			InOrderTraversal(root.left,  sb);
 			sb.append(root.toString()); //IndexNode root, does the printing
-			InOrderTraverse(root.right, sb);
+			InOrderTraversal(root.right, sb);
 		}
-
 	}
 
 	public String toString() {
 		//System.out.println("Bldg string");
 		StringBuilder sb = new StringBuilder();
-		InOrderTraverse(root, sb);
+		InOrderTraversal(root, sb);
 		return sb.toString();
 	}
-
 
 	public static void main(String[] args){
 		// add all the words to the tree
@@ -217,3 +207,8 @@ public class IndexTree {
 		//printIndex();
 	}
 }
+
+
+/*
+	END OF FILE
+ */
